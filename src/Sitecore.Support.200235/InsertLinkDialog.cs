@@ -43,7 +43,12 @@ namespace Sitecore.Speak.Applications
         if (ItemUri.IsItemUri(queryString))
         {
           ItemUri uri = ItemUri.Parse(queryString);
-          Item rootItem = ClientHost.Items.GetItem(uri.GetPathOrId());
+          #region Modified code
+
+          //original ClientHost.Items.GetItem(uri.GetPathOrId()) replaced with ClientHost.Databases.ContentDatabase.GetItem(uri.GetPathOrId())
+          Item rootItem = ClientHost.Databases.ContentDatabase.GetItem(uri.GetPathOrId());
+
+          #endregion
           if (rootItem == null)
           {
             rootItem = ClientHost.Databases.Database.GetRootItem();
@@ -52,7 +57,12 @@ namespace Sitecore.Speak.Applications
         }
         else
         {
-          Item item = ClientHost.Items.GetItem(queryString);
+          #region Modified code
+
+          //original ClientHost.Items.GetItem(queryString) replaced with ClientHost.Databases.ContentDatabase.GetItem(queryString)
+          Item item = ClientHost.Databases.ContentDatabase.GetItem(queryString);
+
+          #endregion
           if (item == null)
           {
             item = ClientHost.Databases.Database.GetRootItem();
